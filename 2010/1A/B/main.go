@@ -13,11 +13,8 @@ var N int
 
 //M number of lines of dirs you must make
 var M int
-
 var total int
-
 var line string
-
 var root *Dir
 
 //Dir is a dir
@@ -53,8 +50,7 @@ func main() {
 	for test := 1; test <= T; test++ {
 		total = 0
 		root = newDir("root")
-		fmt.Scan(&N)
-		fmt.Scan(&M)
+		fmt.Scan(&N, &M)
 		for n := 0; n < N; n++ {
 			root.ezAdd(false)
 		}
