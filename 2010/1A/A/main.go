@@ -10,14 +10,11 @@ var line string
 var N int //board size
 //K is rows to win
 var K int //in a row to win
-var R bool
-var B bool
 
 var grid [][]int
 
 func main() {
 	fmt.Scan(&T)
-	fmt.Println(T)
 	for i := 0; i < T; i++ {
 		fmt.Scan(&N, &K)
 		/*	fmt.Print(N)
@@ -41,29 +38,32 @@ func main() {
 				}
 			}
 		}
-		check()
+		are, bee := check()
+		//fmt.Println("FINAL:", are, bee)
 		var winner string
 		switch {
-		case R && B:
+		case are && bee:
 			winner = "Both"
-		case R:
+		case are:
 			winner = "Red"
-		case B:
+		case bee:
 			winner = "Blue"
 		default:
 			winner = "Neither"
 		}
-		fmt.Printf("Case #%d: %s\n", i, winner)
+		fmt.Printf("Case #%d: %s\n", i+1, winner)
 	}
 }
 
 func check() (bool, bool) {
 	var row []int
-
+	R, B := false, false
 	for i := range grid {
 		//Horizontal
+		//fmt.Println("Horizontal")
 		HR, HB := checkSet(grid[i])
 		//Verticle
+		//fmt.Println("Verticle")
 		row = make([]int, N)
 		for j := 0; j < N; j++ {
 			row[j] = grid[j][i]
@@ -72,6 +72,7 @@ func check() (bool, bool) {
 		//DiagRight
 
 		var DRR, DRB bool
+		//fmt.Println("DiagRight")
 		if i+K-1 < N {
 			for j := 0; j+K-1 < N; j++ {
 				TR, TB := checkSet(diagRight(i, j))
@@ -79,7 +80,7 @@ func check() (bool, bool) {
 				DRB = DRB || TB
 			}
 		}
-
+		//fmt.Println("DiagLeft")
 		//DiagLeft
 		var DLR, DLB bool
 		if i-K+1 < N {
@@ -89,17 +90,18 @@ func check() (bool, bool) {
 				DLB = DLB || TB
 			}
 		}
-		R = HR || VR || DRR || DLR
-		B = HB || VB || DRB || DLB
+		R = R || HR || VR || DRR || DLR
+		B = B || HB || VB || DRB || DLB
 	}
 
 	return R, B
 }
 
 func checkSet(set []int) (bool, bool) {
+	//fmt.Println(set)
 	R, B := false, false
 	old := 0
-	combo := 0
+	combo := 1
 	for _, v := range set {
 		if v == 0 {
 			continue
@@ -115,9 +117,10 @@ func checkSet(set []int) (bool, bool) {
 				}
 			}
 			old = v
-			combo = 0
+			combo = 1
 		}
 	}
+	//fmt.Println(combo, " combo vs K; ", K)
 	if combo >= K {
 		if old == 1 {
 			R = true
@@ -125,6 +128,7 @@ func checkSet(set []int) (bool, bool) {
 			B = true
 		}
 	}
+	//fmt.Println(R, B)
 	return R, B
 }
 
