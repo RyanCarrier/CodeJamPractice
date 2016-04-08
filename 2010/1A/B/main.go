@@ -27,10 +27,7 @@ type Dir struct {
 }
 
 func newDir(Name string) *Dir {
-	d := Dir{}
-	d.Name = Name
-	d.Dirs = map[string]*Dir{}
-	return &d
+	return &Dir{Name, map[string]*Dir{}}
 }
 
 func (d *Dir) add(these []string, sum bool) {
