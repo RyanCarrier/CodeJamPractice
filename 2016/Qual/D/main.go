@@ -54,10 +54,24 @@ func eval() []int {
 	if K < C-1 {
 		return []int{}
 	}
+	initial := C
+	max := C - 2
+	i := 1
+	for i <= max {
+		initial += i * pow(K, max-i+1)
+	}
 	for i := 0; i < K-(C-1); i++ {
 		col := i * K
 		row := i + 2
 		result = append(result, col+row)
 	}
 	return result
+}
+
+func pow(e, n int) int {
+	initial := e
+	for i := 1; i < n; i++ {
+		initial *= e
+	}
+	return initial
 }
