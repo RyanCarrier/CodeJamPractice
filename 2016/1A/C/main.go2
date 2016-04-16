@@ -1,0 +1,52 @@
+package main
+
+import "fmt"
+
+//T t
+var T int
+
+//N how many ints
+var N int
+
+//BFF is the id of their bff
+var BFF []int
+
+func main() {
+	fmt.Scan(&T)
+	for test := 1; test <= T; test++ {
+		fmt.Scan(&N)
+		fmt.Printf("Case #%d: ", test)
+		solve()
+		fmt.Println()
+	}
+}
+
+func solve() {
+	BFF = make([]int, N+1)
+	var bff int
+	for i := 0; i < N; i++ {
+		fmt.Scan(&bff)
+		BFF[i+1] = bff
+	}
+	best := 0
+	for i := 1; best < N && i <= N; i++ {
+		best = max(best, test(i))
+	}
+	fmt.Print(best)
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func test(i int) int {
+	used := make([]bool, N+1)
+	used[i] = true
+	for j:=1; j<=N;j++{
+
+	}
+	return 0
+}
