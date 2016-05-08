@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 var tests, n int
-
+var b, m int
 var line string
 
 func main() {
@@ -16,5 +16,7 @@ func main() {
 }
 
 func solve() {
-
+	fmt.Scan(&b)
+	fmt.Scan(&m)
+	if
 }
