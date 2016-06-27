@@ -1,12 +1,9 @@
 package main
 
-import (
-	"fmt"
-	"strconv"
-)
+import "fmt"
 
 var tests, n int
-var result string
+
 var line string
 
 func main() {
@@ -18,25 +15,30 @@ func main() {
 }
 
 func solve() {
-	result = ""
 	fmt.Scan(&line)
 	list := make([]bool, len(line))
-	number(list, 0)
-	fmt.Println(result)
+	answer, _ := number(list, 0)
+	fmt.Println(answer)
 }
 
 func number(list []bool, i int) bool {
-	//fmt.Println(i, list)
-	if alltru(list) || i > 9 {
+	//	fmt.Println("Checking ", i)
+	//	fmt.Println(list)
+	if alltru(list) {
 		return true
 	}
-	_, ok := removeSwitch(list, i)
-	if ok {
-		//	fmt.Println(i, result)
-		result += strconv.Itoa(i)
-		return number(list, i)
+	newlist := make([]bool, len(list))
+	for i, l := range list {
+		newlist[i] = l
 	}
-	return number(list, i+1)
+	temp, ok := removeSwitch(newlist, i)
+	if ok {
+		fmt.Print(i)
+	}
+	if i < 9 {
+		return number(list, i+1)
+	}
+	return "Not ok", false
 }
 
 func alltru(list []bool) bool {
@@ -46,6 +48,20 @@ func alltru(list []bool) bool {
 		}
 	}
 	return true
+}
+
+func removeALoop(list []bool, remove string) ([]bool, bool) {
+	var i int
+	newList := list
+	for _, r := range remove {
+		i = removeA(newList, r)
+		if i < 0 {
+			//fmt.Println("CONFIRMED", i, string(r))
+			return []bool{}, false
+		}
+		newList[i] = true
+	}
+	return newList, true
 }
 
 func removeSwitch(list []bool, remove int) ([]bool, bool) {
@@ -75,25 +91,12 @@ func removeSwitch(list []bool, remove int) ([]bool, bool) {
 	return removeALoop(list, s)
 }
 
-func removeALoop(list []bool, remove string) ([]bool, bool) {
-	var i int
-	add := make([]int, len(remove))
-	for j, r := range remove {
-		i = removeA(list, r)
-		if i < 0 {
-			return []bool{}, false
-		}
-		add[j] = i
-	}
-	for j := range add {
-		list[add[j]] = true
-	}
-	return list, true
-}
-
 func removeA(list []bool, r rune) int {
 	for i := range list {
-		if list[i] == false && rune(line[i]) == r {
+		if list[i] == true {
+			continue
+		}
+		if rune(line[i]) == r {
 			return i
 		}
 	}
