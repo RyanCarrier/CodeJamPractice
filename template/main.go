@@ -1,14 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	ioh "github.com/RyanCarrier/CodeJamPractice/iohelper"
+)
 
 //T test cases
 var T int
 
-var line string
-
+//var io = iohelper
 func main() {
-	fmt.Scan(&T)
+	T = ioh.GetInt()
 	for test := 1; test <= T; test++ {
 		fmt.Printf("Case #%d: ", test)
 		solve()
