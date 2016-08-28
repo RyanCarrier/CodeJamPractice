@@ -52,3 +52,10 @@ func GetInts() []int {
 	}
 	return list
 }
+
+//GetInt64 gets int64 from stdin
+func GetInt64() int64 {
+	var temp int64
+	fmt.Fscan(bio, &temp)
+	return temp
+}
